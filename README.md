@@ -6,9 +6,7 @@
 
 ## Screenshots
 
-![Google Cloud Drive - Home Dashboard](./screenshots/dashboard.png)
-
-> *Replace `./screenshots/dashboard.png` with the actual path to your screenshot.*
+![Google Cloud Drive - Home Dashboard](image.png)
 
 ---
 
@@ -236,9 +234,3 @@ cfs/
         ├── client/FileSearchClient.java
         └── client/FolderSearchClient.java
 ```
-
----
-
-## License
-
-This project is for internal/educational use.
