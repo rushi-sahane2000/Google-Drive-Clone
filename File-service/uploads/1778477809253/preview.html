@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Aether Drive</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+  --bg:#050816;
+  --surface:#0f1729;
+  --surface2:#121b31;
+  --surface3:#1b2640;
+  --border:rgba(255,255,255,0.08);
+  --accent:#7c5cff;
+  --accent2:#b34dff;
+  --text:#eef2ff;
+  --muted:#9ba7c7;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  height:100vh;
+  overflow:hidden;
+}
+
+/* BACKGROUND */
+
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:
+  radial-gradient(circle at top right, rgba(124,92,255,.2), transparent 30%),
+  radial-gradient(circle at bottom left, rgba(179,77,255,.1), transparent 30%);
+  pointer-events:none;
+}
+
+/* LAYOUT */
+
+.app{
+  display:flex;
+  height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+  width:300px;
+  background:linear-gradient(
+  180deg,
+  #0c1224 0%,
+  #070b16 100%);
+  border-right:1px solid var(--border);
+  padding:28px 18px;
+  display:flex;
+  flex-direction:column;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:32px;
+}
+
+.logo-icon{
+  width:50px;
+  height:50px;
+  border-radius:16px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:24px;
+  box-shadow:0 10px 30px rgba(124,92,255,.35);
+}
+
+.logo-text{
+  font-family:'Syne',sans-serif;
+  font-size:34px;
+  font-weight:800;
+}
+
+.logo-sub{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.upload-btn{
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  border:none;
+  padding:16px;
+  border-radius:18px;
+  color:white;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+  margin-bottom:14px;
+  transition:.25s;
+}
+
+.upload-btn:hover{
+  transform:translateY(-2px);
+}
+
+.folder-btn{
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--border);
+  padding:16px;
+  border-radius:18px;
+  color:var(--text);
+  font-size:16px;
+  cursor:pointer;
+  margin-bottom:28px;
+}
+
+.nav-title{
+  color:#7f8bb0;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  margin-bottom:16px;
+}
+
+.nav{
+  margin-bottom:30px;
+}
+
+.nav-item{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:14px 16px;
+  border-radius:16px;
+  margin-bottom:8px;
+  cursor:pointer;
+  color:#b8c1dd;
+  transition:.2s;
+}
+
+.nav-item:hover{
+  background:rgba(255,255,255,.05);
+}
+
+.nav-item.active{
+  background:rgba(255,255,255,.06);
+  border-left:3px solid var(--accent);
+  color:white;
+}
+
+.storage{
+  margin-top:auto;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--border);
+  padding:20px;
+  border-radius:22px;
+}
+
+.storage-top{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:12px;
+}
+
+.progress{
+  width:100%;
+  height:8px;
+  background:#1f2943;
+  border-radius:999px;
+  overflow:hidden;
+  margin-bottom:12px;
+}
+
+.progress-fill{
+  width:65%;
+  height:100%;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  border-radius:999px;
+}
+
+.storage small{
+  color:var(--muted);
+}
+
+/* MAIN */
+
+.main{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+}
+
+/* TOPBAR */
+
+.topbar{
+  height:82px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 28px;
+  background:rgba(10,14,28,.85);
+  backdrop-filter:blur(20px);
+}
+
+.search{
+  width:480px;
+  position:relative;
+}
+
+.search input{
+  width:100%;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--border);
+  padding:15px 18px 15px 50px;
+  border-radius:18px;
+  color:white;
+  outline:none;
+  font-size:15px;
+}
+
+.search-icon{
+  position:absolute;
+  left:18px;
+  top:14px;
+  color:#8d97b5;
+}
+
+.top-actions{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.icon-btn{
+  width:46px;
+  height:46px;
+  border-radius:16px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.03);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  font-size:18px;
+  transition:.2s;
+}
+
+.icon-btn:hover{
+  background:rgba(255,255,255,.06);
+}
+
+/* CONTENT */
+
+.content{
+  padding:30px;
+  overflow:auto;
+}
+
+.section{
+  margin-bottom:36px;
+}
+
+.section-top{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:18px;
+}
+
+.section-title{
+  font-size:22px;
+  font-weight:700;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:18px;
+}
+
+.card{
+  background:linear-gradient(
+  180deg,
+  rgba(255,255,255,.04),
+  rgba(255,255,255,.02));
+  border:1px solid var(--border);
+  border-radius:24px;
+  padding:22px;
+  transition:.25s;
+  cursor:pointer;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+  border-color:rgba(124,92,255,.4);
+  box-shadow:0 15px 40px rgba(0,0,0,.35);
+}
+
+.card-icon{
+  font-size:44px;
+  margin-bottom:18px;
+}
+
+.card-name{
+  font-size:17px;
+  font-weight:600;
+  margin-bottom:6px;
+}
+
+.card-meta{
+  color:var(--muted);
+  font-size:14px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+.sidebar{
+  display:none;
+}
+
+.search{
+  width:100%;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+<div class="logo">
+<div class="logo-icon">☁️</div>
+
+<div>
+<div class="logo-text">Aether</div>
+<div class="logo-sub">Smart Cloud Storage</div>
+</div>
+</div>
+
+<button class="upload-btn">
++ New Upload
+</button>
+
+<button class="folder-btn">
+📁 Create Folder
+</button>
+
+<div class="nav">
+
+<div class="nav-title">
+Overview
+</div>
+
+<div class="nav-item active">
+🏠 Home
+</div>
+
+<div class="nav-item">
+📁 My Drive
+</div>
+
+<div class="nav-item">
+✨ Shared
+</div>
+
+<div class="nav-item">
+🕘 Recent
+</div>
+
+</div>
+
+<div class="nav">
+
+<div class="nav-title">
+Categories
+</div>
+
+<div class="nav-item" onclick="filterFiles('images')">
+🖼️ Images
+</div>
+
+<div class="nav-item" onclick="filterFiles('documents')">
+📄 Documents
+</div>
+
+<div class="nav-item" onclick="filterFiles('media')">
+🎬 Media
+</div>
+
+</div>
+
+<div class="storage">
+
+<div class="storage-top">
+<strong>Storage</strong>
+<span style="color:#9aa5c4;">65% used</span>
+</div>
+
+<div class="progress">
+<div class="progress-fill"></div>
+</div>
+
+<small>9.2 GB of 15 GB used</small>
+
+</div>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main">
+
+<!-- TOPBAR -->
+
+<div class="topbar">
+
+<div class="search">
+<div class="search-icon">🔍</div>
+
+<input
+type="text"
+placeholder="Search files and folders..."
+id="searchInput"
+onkeyup="searchFiles()"
+/>
+</div>
+
+<div class="top-actions">
+
+<div class="icon-btn">
+🌙
+</div>
+
+<div class="icon-btn">
+🔔
+</div>
+
+<div class="icon-btn">
+⚙️
+</div>
+
+</div>
+
+</div>
+
+<!-- CONTENT -->
+
+<div class="content">
+
+<div class="section">
+
+<div class="section-top">
+<div class="section-title">
+Recent Files
+</div>
+
+<div style="color:#9ba7c7;">
+12 items
+</div>
+</div>
+
+<div class="cards" id="fileContainer">
+
+<!-- CARD -->
+
+<div class="card file-card" data-type="documents">
+
+<div class="card-icon">
+📕
+</div>
+
+<div class="card-name">
+Project Proposal.pdf
+</div>
+
+<div class="card-meta">
+2.4 MB
+</div>
+
+</div>
+
+<!-- CARD -->
+
+<div class="card file-card" data-type="images">
+
+<div class="card-icon">
+🖼️
+</div>
+
+<div class="card-name">
+Banner Design.png
+</div>
+
+<div class="card-meta">
+4.1 MB
+</div>
+
+</div>
+
+<!-- CARD -->
+
+<div class="card file-card" data-type="media">
+
+<div class="card-icon">
+🎬
+</div>
+
+<div class="card-name">
+Promo Video.mp4
+</div>
+
+<div class="card-meta">
+14 MB
+</div>
+
+</div>
+
+<!-- CARD -->
+
+<div class="card file-card" data-type="documents">
+
+<div class="card-icon">
+📘
+</div>
+
+<div class="card-name">
+Resume.docx
+</div>
+
+<div class="card-meta">
+840 KB
+</div>
+
+</div>
+
+<!-- CARD -->
+
+<div class="card file-card" data-type="documents">
+
+<div class="card-icon">
+☕
+</div>
+
+<div class="card-name">
+App.java
+</div>
+
+<div class="card-meta">
+12 KB
+</div>
+
+</div>
+
+<!-- CARD -->
+
+<div class="card file-card" data-type="images">
+
+<div class="card-icon">
+🎨
+</div>
+
+<div class="card-name">
+UI Mockup.fig
+</div>
+
+<div class="card-meta">
+7.8 MB
+</div>
+
+</div>
+
+<!-- CARD -->
+
+<div class="card file-card" data-type="media">
+
+<div class="card-icon">
+🎵
+</div>
+
+<div class="card-name">
+Background Music.mp3
+</div>
+
+<div class="card-meta">
+5.1 MB
+</div>
+
+</div>
+
+<!-- CARD -->
+
+<div class="card file-card" data-type="documents">
+
+<div class="card-icon">
+📋
+</div>
+
+<div class="card-name">
+Database.sql
+</div>
+
+<div class="card-meta">
+2.2 MB
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+// SEARCH
+
+function searchFiles(){
+
+let input =
+document
+.getElementById('searchInput')
+.value
+.toLowerCase();
+
+let cards =
+document.querySelectorAll('.file-card');
+
+cards.forEach(card=>{
+
+let name =
+card
+.querySelector('.card-name')
+.innerText
+.toLowerCase();
+
+if(name.includes(input)){
+card.style.display='block';
+}else{
+card.style.display='none';
+}
+
+});
+
+}
+
+// CATEGORY FILTER
+
+function filterFiles(type){
+
+let cards =
+document.querySelectorAll('.file-card');
+
+cards.forEach(card=>{
+
+if(card.dataset.type===type){
+card.style.display='block';
+}else{
+card.style.display='none';
+}
+
+});
+
+}
+
+// SIMPLE ACTIVE NAV
+
+document
+.querySelectorAll('.nav-item')
+.forEach(item=>{
+
+item.addEventListener('click',()=>{
+
+document
+.querySelectorAll('.nav-item')
+.forEach(i=>i.classList.remove('active'));
+
+item.classList.add('active');
+
+});
+
+});
+
+</script>
+
+</body>
+</html>
