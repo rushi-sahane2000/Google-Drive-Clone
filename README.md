@@ -1,6 +1,14 @@
-# AETHER - CLOUD DRIVE
+# Google Cloud Drive
 
-A Spring Boot microservices-based file management system that allows users to upload, download, organize files into folders, and search across the system.
+> A Spring Boot microservices-based file management system that allows users to upload, download, organize files into folders, and search across the system.
+
+---
+
+## Screenshots
+
+![Google Cloud Drive - Home Dashboard](./screenshots/dashboard.png)
+
+> *Replace `./screenshots/dashboard.png` with the actual path to your screenshot.*
 
 ---
 
